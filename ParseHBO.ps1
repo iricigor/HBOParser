@@ -9,10 +9,10 @@
 [CmdletBinding()]
 param (
     [ValidatePattern('[0|1][0-9]\/[0-3][0-9]')]
-    [string]$date = (Get-Date -Date ((Get-Date).AddDays(1)) -Format 'MM\/dd'),
+    [string]$Date = (Get-Date -Date ((Get-Date).AddDays(1)) -Format 'MM\/dd'),
 
     [ValidatePattern('\w{2}')]
-    [string]$countrycode = 'cz' # tested cz, rs, hu, pl, hr, ba, ro, bg, mk, me, si 
+    [string]$CountryCode = 'cz' # tested cz, rs, hu, pl, hr, ba, ro, bg, mk, me, si 
 )
 
 Write-verbose "$(Get-Date -Format F) Get-HBOSchedule starting"
@@ -92,24 +92,24 @@ foreach ($schedule1 in $ParsedSchedule) {
             Channel = $ChannelName
             Time = $Time
             Title = $Title
-            Type = $Type
+            Type = $Type  # movie or series
             # movie links
             Link = "https://www.hbo.$countrycode$Link"
             HBOGOLink = $HBOGOLink
             # some class information available on the page
-            Classes = $Classes -join ','
+            # Classes = $Classes -join ','
             # type_future = 'future' -in $Classes # all?
             # type_hasGoLink = 'hasGoLink' -in $Classes
             # type_premier = 'premier' -in $Classes
             type_prime = 'prime' -in $Classes # this is premiera, and not the one above!
             # type_show = 'show' -in $Classes # all?
-            # add movie types # TODO: Convert this to normal names, like family, sci-fi, etc
+            # add movie types
             action = 'type_a' -in $Classes # action, adventures
-            comedie = 'type_b' -in $Classes # comedie, romance
-            drama = 'type_c' -in $Classes # drama, documentary
+            comedy = 'type_b' -in $Classes # comedie, romance
+            drama  = 'type_c' -in $Classes # drama, documentary
             family = 'type_d' -in $Classes # family
             horror = 'type_e' -in $Classes # thriller, horror
-            scifi = 'type_f' -in $Classes # sci-fi, fantasy
+            scifi  = 'type_f' -in $Classes # sci-fi, fantasy
             others = 'type_x' -in $Classes # others
         }
     }
