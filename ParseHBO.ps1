@@ -1,11 +1,5 @@
 ﻿function Get-HBOSchedule {
 
-# TODO: Add enum for types, better represent them
-# TODO: Add -ExportExcel support
-# TODO: Add switch to include hidden types
-# TODO: Add -DaysAhead
-# TODO: Add all this as GitHub issues
-
 [CmdletBinding()]
 param (
     [ValidatePattern('[0|1][0-9]\/[0-3][0-9]')]
