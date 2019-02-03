@@ -1,2 +1,4 @@
-# HBOParser
-parse TV schedule for HBo european channels
+# HBO Parser - Work in progress
+
+parse TV schedule for HBO european channels
+
