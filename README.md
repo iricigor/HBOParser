@@ -1,10 +1,23 @@
-# HBO Parser - Work in progress
+# HBO Parser
 
-parse TV schedule for HBO european channels
+Parse TV schedule for HBO European channels. Results are exported as PowerShell object which can be easily viewed as CSV or Excel document.
+Supported countries are: 'cz', 'rs', 'hu', 'pl', 'hr', 'ba', 'ro', 'bg', 'mk', 'me' and 'si', as per available HBO web sites.
+
+## Disclaimer
+
+This script is my own work. It is not an official HBO application, and it is not in any way endorsed by HBO. 
+HBO web page structure may change anytime and it might break completely this script.
+This script has no control over content on HBO site, use given links with carefully.
+
+## Installation
+
+Clone the repository and import the module
+```PowerShell
+git clone https://github.com/iricigor/HBOParser.git
+Import-Module ./HBOParser -Force
+```
 
 ## Examples
-
-First run a script with `.\ParseHBO.ps1` to import new function `Get-HBOSchedule` into your session. Then run any of the commands below.
 
 ```PowerShell
 PS C:\> Get-HBOSchedule
@@ -24,3 +37,8 @@ PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel 
 
 Gets program from Serbian HBO for February 14th and opens them in Excel (needs [ImportExcel module](https://github.com/dfinke/ImportExcel)).
 
+```PowerShell
+PS C:\> Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
+```
+
+Gets program for tomorrow (default date) and for three more days after that day.
