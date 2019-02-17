@@ -1,10 +1,10 @@
-function Parse1Item ($I1) {
+﻿function Parse1Item ($I1) {
 
     #
     # Example of received object
     #
     # <A class="show hasGoLink type_f type_a future   " href="/movie/sucker-punch_-70878">
-    # <SPAN class=time>04:05</SPAN> <SPAN class=title>Sucker Punch</SPAN> 
+    # <SPAN class=time>04:05</SPAN> <SPAN class=title>Sucker Punch</SPAN>
     # <SPAN id=gourl___http://www.hbogo.cz/redirect/-70878 title="Sledujte nyní na HBO GO" class=showgourl></SPAN>
     # <SPAN id=info_4113536 class=showinfo></SPAN>
     # <DIV class=clear></DIV></A>
@@ -16,17 +16,17 @@ function Parse1Item ($I1) {
         Write-Warning "No inner text for $I1"
         continue
     }
-    
+
     # Parse classes
     if ($HTML -match '^(<A class=")([^"]+)"') {
         $Classes = ($Matches[2] -split ' ') | where {$_ -match '\w'}
         # future,hasGoLink,premier,prime,show
-        # type_a,b,c,d,e,f,x 
+        # type_a,b,c,d,e,f,x
         # TODO: Add class explanations
     } else {
         Write-Error "Classes not identified for '$Text'`n$HTML"
     }
-    
+
     # Parse link
     if ($HTML -match '(href=")([^"]+)"') {
         $Link = $Matches[2]  # full link should be preappended with https://www.hbo.cz

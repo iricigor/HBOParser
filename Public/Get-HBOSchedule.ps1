@@ -34,7 +34,7 @@
         $NextDate = $CurrentDate.AddDays(1)
         $date = Get-Date $NextDate -Format 'MM\/dd'
     }
-        
+
     Write-verbose "$(Get-Date -Format F) Get-HBOSchedule finished"
 
 }
