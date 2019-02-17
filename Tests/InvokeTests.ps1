@@ -5,7 +5,7 @@
 
 if (!(Get-Module PSScriptAnalyzer -ListAvailable )) {
     Write-Output "Importing PSScriptAnalyzer"
-    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Confirm -Force -Verbose
+    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Force -Verbose
     Write-Output "Rechecking it..."
     Get-Module PSScriptAnalyzer -ListAvailable
 }
