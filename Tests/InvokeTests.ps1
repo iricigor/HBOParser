@@ -4,8 +4,12 @@
 
 
 if (!(Get-Module PSScriptAnalyzer -ListAvailable )) {
-    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Confirm -Force
+    Write-Output "Importing PSScriptAnalyzer"
+    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Confirm -Force -Verbose
+    Write-Output "Rechecking it..."
+    Get-Module PSScriptAnalyzer -ListAvailable
 }
+Import-Module PSScriptAnalyzer
 
 $SAReport = Invoke-ScriptAnalyzer -Path (Join-path $PSScriptRoot '..') -Recurse
 $Errors = $SAReport | ? Severity -eq 'Error'
