@@ -1,9 +1,9 @@
-function Parse1Channel ($ScheduleHTML) {
+﻿function Parse1Channel ($ScheduleHTML) {
 
     # Convert HTML to object
     $Schedule = New-Object -ComObject "HTMLFile" -Verbose:$false
     $Schedule.IHTMLDocument2_write($ScheduleHTML)
-       
+
     # Extract channel name from image
     $img = $Schedule.getElementsByTagName('IMG') | % OuterHTML
     $ChannelName = if ($img -match 'logo (\w+)\"') {$Matches[1]} else {'Unknown'}
