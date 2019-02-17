@@ -20,7 +20,6 @@
         $uri = "https://www.hbo.$countrycode/schedule/vertical_view/$date"
         Write-Verbose "$(Get-Date -Format T)  Obtaining $uri"
         $page = Invoke-WebRequest $uri -verbose:$false -ea Stop
-        # TODO: Add error handling for iwr
 
         Write-verbose "$(Get-Date -Format T)  Parsing HTML"
         $divs = $page.AllElements | ? TagName -eq 'DIV'
