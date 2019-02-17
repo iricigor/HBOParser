@@ -18,6 +18,7 @@ Clone the repository and import the module
 git clone https://github.com/iricigor/HBOParser.git
 Import-Module ./HBOParser -Force
 ```
+[![Build status](https://dev.azure.com/iiric/PS1/_apis/build/status/HBO%20Parser%20CI)](https://dev.azure.com/iiric/PS1/_build/latest?definitionId=12)
 
 ## Examples
 
