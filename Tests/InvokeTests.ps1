@@ -4,7 +4,8 @@
 
 
 if (!(Get-Module PSScriptAnalyzer -ListAvailable )) {
-    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Confirm -Force
+    Write-Output "Installing PSScriptAnalyzer"
+    Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Force
 }
 
 $SAReport = Invoke-ScriptAnalyzer -Path (Join-path $PSScriptRoot '..') -Recurse
