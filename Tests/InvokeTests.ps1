@@ -1,19 +1,18 @@
 #
 #  Display diagnostic info
 #
-gci env:\
-Get-Variable
+Get-ChildItem Env:\
+Get-Variable | Select Name, Value
 
 #
 #  We require internet explorer
 #
 
-if ($TF_BUILD -eq $True) {
+if ($Env:TF_BUILD -eq $True) {
     Write-Output "Inside VSTS start iexplore.exe"
     Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
-} else {
-    Write-Output "We are not inside VSTS (TF_BUILD = '$TF_BUILD'"
-    $TF_BUILD | Get-Member
+# } else {
+#     Write-Output "We are not inside VSTS (TF_BUILD = '$Env:TF_BUILD')"
 }
 
 #
