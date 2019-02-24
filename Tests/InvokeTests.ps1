@@ -8,9 +8,12 @@ Get-Variable
 #  We require internet explorer
 #
 
-if ($TF_BUILD) {
+if ($TF_BUILD -eq $True) {
     Write-Output "Inside VSTS start iexplore.exe"
     Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
+} else {
+    Write-Output "We are not inside VSTS (TF_BUILD = '$TF_BUILD'"
+    $TF_BUILD | Get-Member
 }
 
 #
