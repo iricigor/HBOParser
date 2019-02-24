@@ -1,4 +1,10 @@
 #
+#  Display diagnostic info
+#
+gci env:\
+Get-Variable
+
+#
 #  We require internet explorer
 #
 
