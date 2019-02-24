@@ -2,7 +2,12 @@
 
     # Convert HTML to object
     $Schedule = New-Object -ComObject "HTMLFile" -Verbose:$false
-    $Schedule.IHTMLDocument2_write($ScheduleHTML)
+    try {
+        $Schedule.IHTMLDocument2_write($ScheduleHTML)
+    } catch {
+        $src = [System.Text.Encoding]::Unicode.GetBytes($ScheduleHTML)
+        $Schedule.write($src)    
+    }
 
     # Extract channel name from image
     $img = $Schedule.getElementsByTagName('IMG') | % OuterHTML

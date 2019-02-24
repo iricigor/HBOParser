@@ -2,7 +2,7 @@
 
 Parse TV schedule for HBO European channels. Results are exported as PowerShell object which can be easily viewed as CSV or Excel document.
 
-Supported countries are: 'cz', 'rs', 'hu', 'pl', 'hr', 'ba', 'ro', 'bg', 'mk', 'me' and 'si', as per [available HBO web sites](https://www.hbo-europe.com/).
+In total, 11 countries are supported: 'cz', 'rs', 'hu', 'pl', 'hr', 'ba', 'ro', 'bg', 'mk', 'me' and 'si', as per [available HBO web sites](https://www.hbo-europe.com/).
 
 ## Disclaimer
 
