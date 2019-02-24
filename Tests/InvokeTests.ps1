@@ -1,17 +1,12 @@
-if ($Env:TF_BUILD -eq $True) {
 
-    #
-    #  Display diagnostic info
-    #
+
+#
+#  Display diagnostic info within VSTS
+#
+
+if ($Env:TF_BUILD -eq $True) {
     Get-ChildItem Env:\
     Get-Variable | Format-Table Name, Value
-
-    #
-    #  We require internet explorer
-    #
-
-    # Write-Output "Inside VSTS start iexplore.exe"
-    # Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
 }
 
 #
