@@ -17,3 +17,22 @@ if ($Errors) {
     Write-Output "Script Analyzer found following issues"
     $SAReport | Sort-Object Severity | Group-Object Severity,RuleName | Select-Object Count, Name
 }
+
+#
+#  TODO: Check documentation
+#
+
+
+
+#
+#  Invoke Pester tests
+#
+
+if (!(Get-Module Pester -List | where Version -ge 4.0.0)) {
+    Write-Host "`nInstalling Pester"
+    Install-Module -Name Pester -Force -SkipPublisherCheck -Scope CurrentUser -Repository PSGallery
+}
+
+Write-Host "Run Pester tests"
+$Result = Invoke-Pester -PassThru -OutputFile PesterTestResults.xml -CodeCoverage .\P*\*.ps1 -CodeCoverageOutputFile 'PesterCodeCoverageResults.xml'
+if ($Result.failedCount -ne 0) {Write-Error "Pester returned errors"}
