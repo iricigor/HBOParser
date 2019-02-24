@@ -15,13 +15,20 @@ if ($Errors) {
     Write-Error "Script Analyzer found $($Errors.Count) errors"
 } elseif ($SAReport) {
     Write-Output "Script Analyzer found following issues"
-    $SAReport | Sort-Object Severity | Group-Object Severity,RuleName | Select-Object Count, Name
+    $SAReport | Sort-Object Severity,RuleName
 }
-
+#
 #
 #  TODO: Check documentation
 #
 
+#
+#  We require internet explorer
+#
+
+if ($TF_BUILD) {
+    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
+}
 
 
 #
