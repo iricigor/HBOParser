@@ -2,7 +2,7 @@
 #  Display diagnostic info
 #
 Get-ChildItem Env:\
-Get-Variable | Select Name, Value
+Get-Variable | Format-Table Name, Value
 
 #
 #  We require internet explorer
