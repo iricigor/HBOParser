@@ -1,18 +1,17 @@
-#
-#  Display diagnostic info
-#
-Get-ChildItem Env:\
-Get-Variable | Format-Table Name, Value
-
-#
-#  We require internet explorer
-#
-
 if ($Env:TF_BUILD -eq $True) {
-    Write-Output "Inside VSTS start iexplore.exe"
-    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
-# } else {
-#     Write-Output "We are not inside VSTS (TF_BUILD = '$Env:TF_BUILD')"
+
+    #
+    #  Display diagnostic info
+    #
+    Get-ChildItem Env:\
+    Get-Variable | Format-Table Name, Value
+
+    #
+    #  We require internet explorer
+    #
+
+    # Write-Output "Inside VSTS start iexplore.exe"
+    # Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
 }
 
 #
