@@ -1,4 +1,13 @@
 #
+#  We require internet explorer
+#
+
+if ($TF_BUILD) {
+    Write-Output "Inside VSTS start iexplore.exe"
+    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
+}
+
+#
 # Invoke Script Analyzer
 #
 
@@ -21,14 +30,6 @@ if ($Errors) {
 #
 #  TODO: Check documentation
 #
-
-#
-#  We require internet explorer
-#
-
-if ($TF_BUILD) {
-    Invoke-Item "C:\Program Files\Internet Explorer\iexplore.exe" 
-}
 
 
 #
