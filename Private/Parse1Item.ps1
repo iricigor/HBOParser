@@ -22,7 +22,6 @@
         $Classes = ($Matches[2] -split ' ') | where {$_ -match '\w'}
         # future,hasGoLink,premier,prime,show
         # type_a,b,c,d,e,f,x
-        # TODO: Add class explanations
     } else {
         Write-Error "Classes not identified for '$Text'`n$HTML"
     }

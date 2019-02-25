@@ -1,5 +1,48 @@
 ﻿function Get-HBOSchedule {
 
+    <#
+    .SYNOPSIS
+    Converts HBO schedule to PowerShell objects
+    
+    .DESCRIPTION
+    Function reads HBO schedule from a web page and converts it to PowerShell objects.
+    You can specify programme for one out of 11 supported countries.
+    It can process arbitrary numbers of days, subject to availability on HBO web site.
+    
+    .PARAMETER Date
+    Specifies date in format MM/dd for which to retrieve programme.
+    Default value is tomorrow's date.
+
+    .PARAMETER CountryCode
+    Specifies country for which programme should be retrieved.
+    Use two character country TLD, as per HBO web sites listed at hbo-europe.com
+
+    .PARAMETER DaysAhead
+    Specifies how many additional days to include in result.
+    Default value is zero, which means only to include days specified in Date parameter.
+    
+    .EXAMPLE
+    PS C:\> Get-HBOSchedule
+    Gets program from HBO Czech Republic (hbo.cz) for tomorrow and displays it on the screen.
+
+    .EXAMPLE
+    PS C:\> Get-HBOSchedule | ? Type -eq 'movie' | Format-Table
+    Lists all movies and displays them as a table.
+
+    .EXAMPLE
+    PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel -now
+    Gets program from Serbian HBO (hbo.rs) for February 14th and opens them in Excel. It needs ImportExcel module by dfinke github.com/dfinke/ImportExcel.
+
+    .EXAMPLE
+    PS C:\> Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
+    Gets program for tomorrow (default date) and for three more days after that day.
+
+    .NOTES
+    Version:        1.0
+    Author:         iricigor@gmail.com
+
+    #>
+
     [CmdletBinding()]
     param (
         [ValidatePattern('[0|1][0-9]\/[0-3][0-9]')]
@@ -7,6 +50,7 @@
 
         [ValidatePattern('\w{2}')]
         [ValidateSet('cz', 'rs', 'hu', 'pl', 'hr', 'ba', 'ro', 'bg', 'mk', 'me', 'si')]
+        [Alias('cc')]
         [string]$CountryCode = 'cz',
 
         [int]$DaysAhead =0

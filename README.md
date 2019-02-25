@@ -20,6 +20,19 @@ Import-Module ./HBOParser -Force
 ```
 [![Build status](https://dev.azure.com/iiric/PS1/_apis/build/status/HBO%20Parser%20CI)](https://dev.azure.com/iiric/PS1/_build/latest?definitionId=12)
 
+Please note that this module might break anytime, due to modifications on HBO websites.
+If this things happen, feel free to open an issue or use dedicated Skype support chat _(no Skype ID required)_.
+
+[![chat on Skype](https://img.shields.io/badge/chat-on%20Skype-blue.svg?style=flat)](https://join.skype.com/hQMRyp7kwjd2)
+
+![GitHub open issues](https://img.shields.io/github/issues/iricigor/HBOParser.svg?style=flat)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/iricigor/HBOParser.svg?style=flat)
+
+If you want to contribute, please fork the code and make a new PR after!
+
+![GitHub](https://img.shields.io/github/license/iricigor/HBOParser.svg?style=flat)
+![GitHub top language](https://img.shields.io/github/languages/top/iricigor/HBOParser.svg?style=flat)
+
 ## Examples
 
 ```PowerShell
