@@ -32,7 +32,9 @@ Describe 'Proper Declaration' {
 Describe 'Function should run without errors' {
 
     It 'Runs function without errors' {
-        { Get-HBOSchedule } | Should -Not -Throw  # long running!
+        #{ Get-HBOSchedule } | Should -Not -Throw 
+        $Items1 = (Get-HBOSchedule).Count
+        $Items1 -gt 1 | Should -Be $true
     }
 
 }
@@ -41,7 +43,9 @@ Describe 'Function should run without errors' {
 Describe 'Gets 3 days data without errors' {
 
     It "Gets 3 days data properly" {
-        { Get-HBOSchedule -DaysAhead 2 } | Should -Not -Throw
+        #{ Get-HBOSchedule -DaysAhead 2 } | Should -Not -Throw
+        $Items3 = (Get-HBOSchedule -DaysAhead 2).Count
+        $Items3 -gt $Items1 | Should -Be $true "one day ($Items1) should have less items than three days ($Items3)"
     }
     
 }
@@ -61,7 +65,9 @@ Describe 'Gets data for each country without errors'  -Tag 'LongRunning' {
 Describe 'Gets movie info for first three scifi movies' {
 
     It "Gets movie info for first three scifi movies properly" {
-        { Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw  # long running!
+        #{ Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw
+        $TwoItems = (Get-HBOSchedule | ? type -eq movie | ? scifi | Select -First 2 | Get-HBOMovieInfo).titleLocal.Count
+        $TwoItems | Should -Be 2 -Because "Two movies cannot have $TwoItems titles"
     }
     
 }
