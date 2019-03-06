@@ -45,7 +45,7 @@ Describe 'Gets 3 days data without errors' {
     It "Gets 3 days data properly" {
         #{ Get-HBOSchedule -DaysAhead 2 } | Should -Not -Throw
         $Items3 = (Get-HBOSchedule -DaysAhead 2).Count
-        $Items3 -gt $Items1 | Should -Be $true "one day ($Items1) should have less items than three days ($Items3)"
+        $Items3 -gt $Items1 | Should -Be $true -Because "one day ($Items1) should have less items than three days ($Items3)"
     }
     
 }
