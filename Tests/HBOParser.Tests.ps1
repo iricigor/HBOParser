@@ -25,6 +25,7 @@ Describe 'Proper Declaration' {
     It 'Checks for existence of function' {
         Get-Command NonExistingCommand -ea 0 | Should -Be $Null
         Get-Command 'Get-HBOSchedule' -ea 0 | Should -Not -Be $Null
+        Get-Command 'Get-HBOMovieInfo' -ea 0 | Should -Not -Be $Null
     }
 }
 
@@ -37,14 +38,30 @@ Describe 'Function should run without errors' {
 }
 
 
-Describe 'Gets 2 days data for each country without errors'  -Tag 'LongRunning' {
+Describe 'Gets 2 days data for each country without errors' {
+
+    It "Gets 3 days data properly" {
+        { Get-HBOSchedule -CountryCode $Country -DaysAhead 2 } | Should -Not -Throw
+    }
+    
+}
+
+Describe 'Gets data for each country without errors'  -Tag 'LongRunning' {
 
     foreach ($Country in @('cz', 'rs', 'hu', 'pl', 'hr', 'ba', 'ro', 'bg', 'mk', 'me', 'si')) {
 
-        It "Gets 2 days data for country $Country properly" {
-            { Get-HBOSchedule -CountryCode $Country -DaysAhead 1 } | Should -Not -Throw  # long running!
+        It "Gets data for country $Country properly" {
+            { Get-HBOSchedule -CountryCode $Country } | Should -Not -Throw  # long running!
         }
     
     }
 
+}
+
+Describe 'Gets movie info for first three scifi movies' {
+
+    It "Gets data for country $Country properly" {
+        { Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw  # long running!
+    }
+    
 }
