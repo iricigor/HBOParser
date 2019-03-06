@@ -22,7 +22,7 @@ Import-Module (Join-Path $root "$ModuleName.psm1") -Force
 #
 Describe 'Proper Declaration' {
 
-    It 'Checks for existence of function' {
+    It 'Checks for existence of functions' {
         Get-Command NonExistingCommand -ea 0 | Should -Be $Null
         Get-Command 'Get-HBOSchedule' -ea 0 | Should -Not -Be $Null
         Get-Command 'Get-HBOMovieInfo' -ea 0 | Should -Not -Be $Null
@@ -38,10 +38,10 @@ Describe 'Function should run without errors' {
 }
 
 
-Describe 'Gets 2 days data for each country without errors' {
+Describe 'Gets 3 days data without errors' {
 
     It "Gets 3 days data properly" {
-        { Get-HBOSchedule -CountryCode $Country -DaysAhead 2 } | Should -Not -Throw
+        { Get-HBOSchedule -DaysAhead 2 } | Should -Not -Throw
     }
     
 }
@@ -60,7 +60,7 @@ Describe 'Gets data for each country without errors'  -Tag 'LongRunning' {
 
 Describe 'Gets movie info for first three scifi movies' {
 
-    It "Gets data for country $Country properly" {
+    It "Gets movie info for first three scifi movies properly" {
         { Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw  # long running!
     }
     
