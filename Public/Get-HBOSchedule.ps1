@@ -20,6 +20,10 @@
     .PARAMETER DaysAhead
     Specifies how many additional days to include in result.
     Default value is zero, which means only to include days specified in Date parameter.
+
+    .PARAMETER InvokeAs
+    Saves results to temporary file and opens it with default application.
+    Supported formats are: 'csv','html','json' and 'txt'.
     
     .EXAMPLE
     PS C:\> Get-HBOSchedule
@@ -53,10 +57,16 @@
         [Alias('cc')]
         [string]$CountryCode = 'cz',
 
-        [int]$DaysAhead =0
+        [int]$DaysAhead =0,
+
+        [parameter(Mandatory=$false,ValueFromPipeline=$false)]
+        [validateset('csv','html','json','txt')]
+        [string]$InvokeAs
+
     )
 
     Write-Verbose "$(Get-Date -Format F) Get-HBOSchedule starting"
+    $RetValues = @()
 
     for ($i=0; $i -le $DaysAhead; $i++) {
 
@@ -71,7 +81,10 @@
         $channels = $divs | ? OuterHTML -match "^\s*$class"
 
         Write-verbose "$(Get-Date -Format T)  Parsing details for $($channels.Count) channels"
-        foreach ($Channel1 in $channels) {Parse1Channel $Channel1.innerHTML}
+        foreach ($Channel1 in $channels) {
+            Parse1Channel $Channel1.innerHTML | Tee-Object -Variable RetValue
+            $RetValues += $RetValue
+        }
 
         # calculate next date
         $CurrentDate = Get-Date -Day ($date.Substring(3,2)) -Month ($date.Substring(0,2))
@@ -79,7 +92,8 @@
         $date = Get-Date $NextDate -Format 'MM\/dd'
     }
 
-    Write-verbose "$(Get-Date -Format F) Get-HBOSchedule finished"
+    if ($InvokeAs) {$RetValues | InvokeTempItem $InvokeAs}
+    Write-Verbose "$(Get-Date -Format F) Get-HBOSchedule finished"
 
 }
 

@@ -40,10 +40,10 @@ PROCESS {
 END {
     # function closing phase
     switch ($OutputType) {
-        'csv'   { $OutObject | Export-Csv -Path $TempFile -NoTypeInformation }
-        'html'  { $OutObject | ConvertTo-Html -Head $HTMLHeader -PostContent "<br>Generated on $(Get-Date)" | Out-File $TempFile }
-        'json'  { $OutObject | ConvertTo-Json | Out-File $TempFile }
-        'txt'   { $OutObject | Out-File $TempFile }
+        'csv'   { $OutObject | Export-Csv -Path $TempFile -NoTypeInformation -Encoding Unicode }
+        'html'  { $OutObject | ConvertTo-Html -Head $HTMLHeader -PostContent "<br>Generated on $(Get-Date)" | Out-File $TempFile -Encoding unicode }
+        'json'  { $OutObject | ConvertTo-Json | Out-File $TempFile -Encoding unicode }
+        'txt'   { $OutObject | Out-File $TempFile -Encoding unicode }
         Default {throw 'Unsupported type'}
     }
     
