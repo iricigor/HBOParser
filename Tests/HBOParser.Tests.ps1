@@ -56,10 +56,8 @@ Describe 'Gets data for each country without errors'  -Tag 'LongRunning' {
 
         It "Gets data for country $Country properly" {
             { Get-HBOSchedule -CountryCode $Country } | Should -Not -Throw  # long running!
-        }
-    
+        }    
     }
-
 }
 
 Describe 'Gets movie info for first two scifi movies' {
@@ -68,6 +66,12 @@ Describe 'Gets movie info for first two scifi movies' {
         #{ Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw
         $TwoItems = (Get-HBOSchedule | ? type -eq movie | ? scifi | Select -First 2 | Get-HBOMovieInfo).titleLocal.Count
         $TwoItems | Should -Be 2 -Because "Two movies cannot have $TwoItems titles"
-    }
-    
+    }    
+}
+
+Describe 'Invoking item should work without errors' {
+
+    It "Invoking item should work without errors" {
+        { Get-HBOSchedule -InvokeAs txt } | Should -Not -Throw
+    }    
 }

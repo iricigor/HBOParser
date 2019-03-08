@@ -10,13 +10,13 @@
     It converts it to PowerShell objects which can be further processed and displayed for example in Excel.
     URL can be given directly or as output from Get-HBOSchedule command.
     
-    .PARAMETER CountryCode
-    Mandatory. Specifies URL(s) which will be parsed.
-    URL can be given directly or as output from Get-HBOSchedule command.
+    .PARAMETER Link
+    Mandatory. Specifies link(s) which will be parsed.
+    Links can be given directly or as output from Get-HBOSchedule command.
 
-    .PARAMETER CountryCode
-    Specifies country for which programme should be retrieved.
-    Use two character country TLD, as per HBO web sites listed at hbo-europe.com
+    .PARAMETER InvokeAs
+    Saves results to temporary file and opens it with default application.
+    Supported formats are: 'csv','html','json' and 'txt'.
     
     .EXAMPLE
     PS C:\> Get-HBOMovieInfo 'https://www.hbo.cz/movie/x-men-prvni-třida_-72006'
@@ -36,7 +36,11 @@
     param (
 
         [Parameter(Mandatory=$true,ValueFromPipeline=$true,ValueFromPipelineByPropertyName=$true)]
-        [string[]]$Link
+        [string[]]$Link,
+
+        [parameter(Mandatory=$false,ValueFromPipeline=$false)]
+        [validateset('csv','html','json','txt')]
+        [string]$InvokeAs
 
     )
 
@@ -45,6 +49,8 @@
         # function begin phase
         $FunctionName = $MyInvocation.MyCommand.Name
         Write-Verbose -Message "$(Get-Date -f G) $FunctionName starting"
+
+        $RetValues = @()
 
     }
 
@@ -114,12 +120,18 @@
                 shortDescription = $AboutText[4]
                 fullDescription = $AboutText[5]
                 parseStatus = $status
-            }
+            } | Tee-Object -Variable RetValue
+
+            $RetValues += $RetValue
         }
 
     }
 
     END {
+
+        if ($InvokeAs) {
+            $RetValues | InvokeTempItem $InvokeAs
+        }
 
         # function closing phase
         Write-Verbose -Message "$(Get-Date -f T) $FunctionName finished"
