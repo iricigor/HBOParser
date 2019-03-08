@@ -75,3 +75,18 @@ Describe 'Invoking item should work without errors' {
         { Get-HBOSchedule -InvokeAs txt } | Should -Not -Throw
     }    
 }
+
+Describe 'Proper Documentation' {
+
+	It 'Updates documentation and does git diff' {
+		# install PlatyPS
+        if (!(Get-Module platyPS -List -ea 0)) {Install-Module platyPS -Force -Scope CurrentUser}
+		Import-Module platyPS
+		# update documentation
+		Push-Location -Path $root
+        Update-MarkdownHelp -Path .\Docs
+        $diff = git diff .\Docs .\en-US
+        Pop-Location
+		$diff | Should -Be $null
+	}
+}

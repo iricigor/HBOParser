@@ -13,7 +13,8 @@ Converts HBO schedule to PowerShell objects
 ## SYNTAX
 
 ```
-Get-HBOSchedule [[-Date] <String>] [[-CountryCode] <String>] [[-DaysAhead] <Int32>] [<CommonParameters>]
+Get-HBOSchedule [[-Date] <String>] [[-CountryCode] <String>] [[-DaysAhead] <Int32>] [[-InvokeAs] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -102,9 +103,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -InvokeAs
+Saves results to temporary file and opens it with default application.
+Supported formats are: 'csv','html','json' and 'txt'.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

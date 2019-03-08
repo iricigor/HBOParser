@@ -28,10 +28,6 @@ if ($Errors) {
     Write-Output "Script Analyzer found following issues"
     $SAReport | Sort-Object Severity,RuleName
 }
-#
-#
-#  TODO: Check documentation
-#
 
 
 #

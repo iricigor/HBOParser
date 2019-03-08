@@ -50,8 +50,22 @@ PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel 
 ```
 
 Gets program from [Serbian HBO](https://www.hbo.rs/) for February 14th and opens them in Excel (needs [ImportExcel module](https://github.com/dfinke/ImportExcel) by [dfinke](https://github.com/dfinke)).
+
 ```PowerShell
 PS C:\> Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
 ```
 
 Gets program for tomorrow (default date) and for three more days after that day.
+
+```PowerShell
+PS C:\> Get-HBOMovieInfo ...
+```
+
+Gets movie details from HBO site
+
+```PowerShell
+PS C:\> Get-HBOMovieInfo ... 
+```
+
+Gets program for tomorrow (default date) and for three more days after that day.
+
