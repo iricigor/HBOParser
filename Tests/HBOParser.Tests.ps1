@@ -62,9 +62,9 @@ Describe 'Gets data for each country without errors'  -Tag 'LongRunning' {
 
 }
 
-Describe 'Gets movie info for first three scifi movies' {
+Describe 'Gets movie info for first two scifi movies' {
 
-    It "Gets movie info for first three scifi movies properly" {
+    It "Gets movie info for first two scifi movies properly" {
         #{ Get-HBOSchedule | ? type -eq movie | ? scfi | Select -First 2 | Get-HBOMovieInfo } | Should -Not -Throw
         $TwoItems = (Get-HBOSchedule | ? type -eq movie | ? scifi | Select -First 2 | Get-HBOMovieInfo).titleLocal.Count
         $TwoItems | Should -Be 2 -Because "Two movies cannot have $TwoItems titles"
