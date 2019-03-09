@@ -40,18 +40,19 @@ Lists all movies and displays them as a table.
 
 ### EXAMPLE 3
 ```
-Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel -now
+Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose
 ```
 
-Gets program from Serbian HBO (hbo.rs) for February 14th and opens them in Excel.
-It needs ImportExcel module by dfinke github.com/dfinke/ImportExcel.
+Gets program from Serbian HBO (hbo.rs) for February 14th.
+It shows verbose output also.
 
 ### EXAMPLE 4
 ```
-Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
+Get-HBOSchedule -DaysAhead 3 -InvokeAs csv -Verbose
 ```
 
 Gets program for tomorrow (default date) and for three more days after that day.
+It will save results to temporary .csv file and open it.
 
 ## PARAMETERS
 
@@ -120,7 +121,8 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
