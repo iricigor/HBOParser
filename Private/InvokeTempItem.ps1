@@ -47,7 +47,7 @@ END {
         Default {throw 'Unsupported type'}
     }
     
-    Invoke-Item -Path $TempFile
+    Invoke-Item -Path $TempFile -ea SilentlyContinue 
 }
 
 }
