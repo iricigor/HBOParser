@@ -40,12 +40,12 @@ Describe 'Function should run without errors' {
 }
 
 
-Describe 'Gets 3 days data without errors' {
+Describe 'Gets 2 days data without errors' {
 
-    It "Gets 3 days data properly" {
+    It "Gets 2 days data properly" {
         #{ Get-HBOSchedule -DaysAhead 2 } | Should -Not -Throw
-        $Items3 = (Get-HBOSchedule -DaysAhead 2).Count
-        $Items3 -gt $Items1 | Should -Be $true -Because "one day ($Items1) should have less items than three days ($Items3)"
+        $Items2 = (Get-HBOSchedule -DaysAhead 1).Count
+        $Items2 -gt $Items1 | Should -Be $true -Because "one day ($Items1) should have less items than three days ($Items2)"
     }
     
 }
@@ -70,9 +70,20 @@ Describe 'Gets movie info for first two scifi movies' {
 }
 
 Describe 'Invoking item should work without errors' {
+    
+    $sampleURL = 'https://www.hbo.cz/movie/x-men-prvni-třida_-72006'
 
-    It "Invoking item should work without errors" {
+    It "Invoking schedule as txt should work without errors" {
         { Get-HBOSchedule -InvokeAs txt } | Should -Not -Throw
+    }    
+    It "Invoking movie info as csv should work without errors" {
+        { Get-HBOMovieInfo $sampleURL -InvokeAs csv } | Should -Not -Throw
+    }    
+    It "Invoking schedule as html should work without errors" {
+        { Get-HBOSchedule -InvokeAs html } | Should -Not -Throw
+    }    
+    It "Invoking movie info as json should work without errors" {
+        { Get-HBOMovieInfo $sampleURL -InvokeAs json } | Should -Not -Throw
     }    
 }
 
@@ -89,4 +100,24 @@ Describe 'Proper Documentation' {
         Pop-Location
 		$diff | Should -Be $null
 	}
+}
+
+Describe 'Error Handling' -Tag Mock {
+
+    Mock -ModuleName $ModuleName Invoke-WebRequest {return $null}
+    It 'Does not throw an error for wrong data' {
+        { Get-HBOSchedule } | Should -Not -Throw
+    }
+
+    It 'It returns no schedule rows for empty data' {
+        @(Get-HBOSchedule).Count | Should -Be 0
+    }
+
+    It 'returns no movie info for empty data' {
+        (Get-HBOMovieInfo 'fakeurl').parseStatus | Should -Be 'failed'
+    }
+    It 'returns no movie info for empty data, even if page exists' {
+        (Get-HBOMovieInfo 'www.bing.com').parseStatus | Should -Be 'failed'
+    }
+
 }

@@ -51,6 +51,7 @@
         Write-Verbose -Message "$(Get-Date -f G) $FunctionName starting"
 
         $RetValues = @()
+        $failStatus = 'failed'
 
     }
 
@@ -63,42 +64,60 @@
             try {
     
                 Write-Verbose -Message "$(Get-Date -f T)   obtaining page $u1..."
+                $status = 'OK'
                 $page = Invoke-WebRequest $u1 -Verbose:$false
     
-                Write-Verbose -Message "$(Get-Date -f T)   parsing the page"
-
                 # get title of the movie
+                Write-Verbose -Message "$(Get-Date -f T)   parsing the title"
                 $H1s = $page.ParsedHtml.getElementsByTagName('h1')
                 $titleHTML = $H1s | % {if ($_.outerHTML -match 'show_title_text') {$_}}
-                $originalName = $titleHTML.getElementsByTagName('span') | % {$_.innerText}
-                $localName = $titleHTML.innerText -replace $originalName,'' -replace "\r\n",''
+                if ($titleHTML) {
+                    $originalName = $titleHTML.getElementsByTagName('span') | % {$_.innerText}
+                    $localName = $titleHTML.innerText -replace $originalName,'' -replace "\r\n",''
+                } else {
+                    $originalName = $localName = $null
+                    $status = $failStatus
+                }
 
                 # get rating
+                Write-Verbose -Message "$(Get-Date -f T)   parsing the rating info"
                 $RatingHTML = $page.ParsedHtml.getElementById('rating_stars')
                 $Rating = if ($RatingHTML.outerHTML -match 'data\-value\=\"(\d\.\d)\"') {$Matches[1]} else {$null}
     
                 # movieId and image URL
+                Write-Verbose -Message "$(Get-Date -f T)   parsing movieId and imageURL"
                 if ($u1 -match '\d{5,}$') {
                     $MovieId = $Matches[0]
                     $ImageURL = $u1.substring(0,18) + ($page.Images | ? src -Match $MovieId | ? src -Match '_875_256.jpg$').src
                 } else {
                     $MovieId = $ImageURL = $null
+                    $status = $failStatus
                 }
     
                 # about the movie
+                Write-Verbose -Message "$(Get-Date -f T)   parsing about the movie section"
                 $AboutHTML = $page.ParsedHtml.getElementById('show_about')
                 if ($AboutHTML.outerHTML -match 'class=pl30[^>]+>(\d+).+>(\d+)</TIME') {
                     $year = $Matches[1]
                     $duration = $Matches[2]
                 } else {
                     $duration = $Year = $null
+                    $status = $failStatus
                 }
                 $AboutText = $AboutHTML.innerText -split "`n"
-                $director = (($AboutText[0] -split ':')[1] -split ' \d')[0] # example Režie:M. Night Shyamalan 2002 | 102 minut | 12
-                $actors = ($AboutText[2] -split ':')[1]
+                if ($AboutText) {
+                    $director = (($AboutText[0] -split ':')[1] -split ' \d')[0] # example Režie:M. Night Shyamalan 2002 | 102 minut | 12
+                    $actors = ($AboutText[2] -split ':')[1]
+                    $category = $AboutText[1]
+                    $shortDescription = $AboutText[4]
+                    $fullDescription = $AboutText[5]
+                } else {
+                    $director = $actors = $category = $shortDescription = $fullDescription = $null
+                    $status = $failStatus
+                }
 
                 # finish
-                $status = 'OK'
+                Write-Verbose -Message "$(Get-Date -f T)   parsing completed"                
             } catch {
                 $status = 'failed'
             }
@@ -115,10 +134,10 @@
                 year = $year
                 duration = $duration
                 director = $director
-                category = $AboutText[1]
+                category = $category
                 actors = $actors
-                shortDescription = $AboutText[4]
-                fullDescription = $AboutText[5]
+                shortDescription = $shortDescription
+                fullDescription = $fullDescription
                 parseStatus = $status
             } | Tee-Object -Variable RetValue
 
