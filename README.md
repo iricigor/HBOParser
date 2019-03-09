@@ -46,12 +46,25 @@ PS C:\> Get-HBOSchedule | ? Type -eq 'movie' | Format-Table
 Lists all movies and displays them as a table.
 
 ```PowerShell
-PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel -now
+PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose
 ```
 
-Gets program from [Serbian HBO](https://www.hbo.rs/) for February 14th and opens them in Excel (needs [ImportExcel module](https://github.com/dfinke/ImportExcel) by [dfinke](https://github.com/dfinke)).
+Gets program from [Serbian HBO](https://www.hbo.rs/) for February 14th. It shows verbose output also.
+
 ```PowerShell
-PS C:\> Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
+PS C:\> Get-HBOSchedule -DaysAhead 3 -InvokeAs csv -Verbose
 ```
 
-Gets program for tomorrow (default date) and for three more days after that day.
+Gets program for tomorrow (default date) and for three more days after that day. It will save results to temporary .csv file and open it.
+
+```PowerShell
+PS C:\> Get-HBOMovieInfo 'https://www.hbo.cz/movie/x-men-prvni-třida_-72006'
+```
+
+Parses given URL for movie information.
+
+```PowerShell
+PS C:\> Get-HBOSchedule | ? type -eq movie | ? scifi | Select -First 2 | Get-HBOMovieInfo
+```
+
+Obtains information for first two scifi movies from tomorrow and then gets their details.

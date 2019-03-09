@@ -13,7 +13,8 @@ Converts HBO schedule to PowerShell objects
 ## SYNTAX
 
 ```
-Get-HBOSchedule [[-Date] <String>] [[-CountryCode] <String>] [[-DaysAhead] <Int32>] [<CommonParameters>]
+Get-HBOSchedule [[-Date] <String>] [[-CountryCode] <String>] [[-DaysAhead] <Int32>] [[-InvokeAs] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,18 +40,19 @@ Lists all movies and displays them as a table.
 
 ### EXAMPLE 3
 ```
-Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel -now
+Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose
 ```
 
-Gets program from Serbian HBO (hbo.rs) for February 14th and opens them in Excel.
-It needs ImportExcel module by dfinke github.com/dfinke/ImportExcel.
+Gets program from Serbian HBO (hbo.rs) for February 14th.
+It shows verbose output also.
 
 ### EXAMPLE 4
 ```
-Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
+Get-HBOSchedule -DaysAhead 3 -InvokeAs csv -Verbose
 ```
 
 Gets program for tomorrow (default date) and for three more days after that day.
+It will save results to temporary .csv file and open it.
 
 ## PARAMETERS
 
@@ -98,6 +100,22 @@ Aliases:
 Required: False
 Position: 3
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InvokeAs
+Saves results to temporary file and opens it with default application.
+Supported formats are: 'csv','html','json' and 'txt'.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -34,12 +34,12 @@
     Lists all movies and displays them as a table.
 
     .EXAMPLE
-    PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose | Export-Excel -now
-    Gets program from Serbian HBO (hbo.rs) for February 14th and opens them in Excel. It needs ImportExcel module by dfinke github.com/dfinke/ImportExcel.
+    PS C:\> Get-HBOSchedule -Date '02/14' -CountryCode 'rs' -Verbose
+    Gets program from Serbian HBO (hbo.rs) for February 14th. It shows verbose output also.
 
     .EXAMPLE
-    PS C:\> Get-HBOSchedule -DaysAhead 3 -Verbose | Export-Excel -now
-    Gets program for tomorrow (default date) and for three more days after that day.
+    PS C:\> Get-HBOSchedule -DaysAhead 3 -InvokeAs csv -Verbose
+    Gets program for tomorrow (default date) and for three more days after that day. It will save results to temporary .csv file and open it.
 
     .NOTES
     Version:        1.0
