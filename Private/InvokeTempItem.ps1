@@ -47,7 +47,7 @@ END {
         Default {throw 'Unsupported type'}
     }
     
-    Invoke-Item -Path $TempFile
+    try {Invoke-Item -Path $TempFile} catch {}
 }
 
 }
