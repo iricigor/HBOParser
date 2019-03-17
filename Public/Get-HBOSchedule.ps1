@@ -92,7 +92,7 @@
         $date = Get-Date $NextDate -Format 'MM\/dd'
     }
 
-    if ($InvokeAs) {$RetValues | InvokeTempItem $InvokeAs}
+    if ($InvokeAs) {$RetValues | InvokeTempItem $InvokeAs -Encoding utf8}
     Write-Verbose "$(Get-Date -Format F) Get-HBOSchedule finished"
 
 }

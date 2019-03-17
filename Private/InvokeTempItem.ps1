@@ -10,7 +10,13 @@ Param(
   
     [parameter(Mandatory=$false,ValueFromPipeline=$false,Position=0)]
     [validateset('csv','html','json','txt')]
-    [string]$OutputType='csv'
+    [string]$OutputType='csv',
+
+    [parameter(Mandatory=$false,ValueFromPipeline=$false)]
+    [validateset('ASCII','BigEndianUnicode','Default','OEM','Unicode','UTF32','UTF7','UTF8')]
+    [string]$Encoding = 'Unicode'
+
+    
   ) #end param
 
 
@@ -40,10 +46,10 @@ PROCESS {
 END {
     # function closing phase
     switch ($OutputType) {
-        'csv'   { $OutObject | Export-Csv -Path $TempFile -NoTypeInformation -Encoding Unicode }
-        'html'  { $OutObject | ConvertTo-Html -Head $HTMLHeader -PostContent "<br>Generated on $(Get-Date)" | Out-File $TempFile -Encoding unicode }
-        'json'  { $OutObject | ConvertTo-Json | Out-File $TempFile -Encoding unicode }
-        'txt'   { $OutObject | Out-File $TempFile -Encoding unicode }
+        'csv'   { $OutObject | Export-Csv -Path $TempFile -NoTypeInformation -Encoding $Encoding }
+        'html'  { $OutObject | ConvertTo-Html -Head $HTMLHeader -PostContent "<br>Generated on $(Get-Date)" | Out-File $TempFile -Encoding $Encoding }
+        'json'  { $OutObject | ConvertTo-Json | Out-File $TempFile -Encoding $Encoding }
+        'txt'   { $OutObject | Out-File $TempFile -Encoding $Encoding }
         Default {throw 'Unsupported type'}
     }
     
