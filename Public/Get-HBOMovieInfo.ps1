@@ -149,7 +149,7 @@
     END {
 
         if ($InvokeAs) {
-            $RetValues | InvokeTempItem $InvokeAs
+            $RetValues | InvokeTempItem $InvokeAs -Encoding utf8
         }
 
         # function closing phase
